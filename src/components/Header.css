@@ -1,0 +1,62 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f4f4f4; /* Light background */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  width: 40px; /* Logo size remains the same */
+  height: auto; /* Ensure logo maintains aspect ratio */
+  margin-right: 10px; /* Spacing between logo and text */
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333; /* Dark text color for contrast */
+  text-decoration: none; /* Remove underline from logo link */
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+}
+
+.header-btn {
+  text-decoration: none;
+  color: #fff;
+  background-color: #333; /* Dark button background */
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.header-btn:hover {
+  background-color: #555; /* Darker shade on hover */
+}
+
+.header-btn {
+  text-decoration: none;
+  color: #fff;
+  background-color: #333; /* Dark button background */
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  border: none; /* Remove border for the button */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.header-btn:hover {
+  background-color: #555; /* Darker shade on hover */
+}
+
+  

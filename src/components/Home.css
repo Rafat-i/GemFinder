@@ -1,0 +1,223 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f4f8; /* Soft background */
+    min-height: 100vh;
+}
+
+/* Motivational Section with Text and Larger Image */
+.motivational-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.text-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.motivational-text {
+    flex: 1;
+}
+
+.motivational-text h2 {
+    font-size: 32px;
+    color: #333333;
+    margin-bottom: 10px; /* Reduced spacing */
+    font-weight: bold;
+}
+
+.motivational-text p {
+    font-size: 18px;
+    color: #555555;
+}
+
+.motivational-image {
+    flex: 1;
+}
+
+.motivational-image img {
+    width: 300px; /* Larger image */
+    height: auto;
+}
+
+/* About Us section styles */
+.about-us-section {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-us-section h2 {
+    font-size: 32px;
+    color: #333333;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.about-us-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between items */
+}
+
+.about-us-item {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 45%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.about-us-item h3 {
+    font-size: 20px;
+    color: #2193b0; /* Accent color */
+    margin-bottom: 10px;
+}
+
+.about-us-item p {
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Subscription Plan section styles */
+.subscription-section {
+    width: 100%;
+    text-align: center;
+}
+
+.subscription-section h2 {
+    font-size: 32px;
+    color: #333333;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Plans container layout using Flexbox */
+.plans-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Plan card with updated background color */
+.plan {
+    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Updated color */
+    padding: 40px;
+    margin: 15px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #ffffff;
+}
+
+.plan:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon for each plan */
+.plan-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* Plan headings */
+.plan h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* Price styling */
+.plan .price {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Select Plan button */
+.select-plan {
+    background-color: #ffffff; /* Default background */
+    color: #2193b0; /* Updated text color */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.select-plan:hover {
+    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Same gradient as plan background */
+    color: #ffffff; /* White text for contrast */
+}
+
+/* Additional Text */
+.additional-text {
+    font-size: 18px;
+    color: #333333;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .text-image-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-us-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-us-item {
+        width: 90%;
+    }
+
+    .plans-container {
+        flex-direction: column;
+    }
+
+    .plan {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
