@@ -207,6 +207,17 @@
     }
 }
 
+.error-message {
+    color: #f44336; /* Red for error messages */
+    font-weight: bold;
+}
+
+.loading-message {
+    color: #ff9800; /* Orange for loading messages */
+    font-weight: bold;
+}
+
+
 
 
 

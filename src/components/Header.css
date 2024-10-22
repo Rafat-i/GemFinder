@@ -59,4 +59,23 @@
   background-color: #555; /* Darker shade on hover */
 }
 
+.blocked-message {
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+  border: 1px solid #f5c6cb; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding around the message */
+  display: flex; /* Flexbox for icon and text alignment */
+  align-items: center; /* Center vertically */
+  margin: 0 10px; /* Margin around the message */
+  font-size: 14px; /* Font size */
+  font-weight: bold; /* Make the text bold */
+}
+
+.blocked-icon {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 18px; /* Size of the icon */
+  color: #721c24; /* Match the icon color with the text */
+}
+
   

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, database } from '../Firebase'; // Ensure you're importing database correctly
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { ref, push } from 'firebase/database'; // Import ref and push from Firebase Realtime Database
+import { ref, set } from 'firebase/database'; // Use 'set' instead of 'push' to store by UID
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -17,18 +17,24 @@ function SignUp() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save additional user information to Realtime Database
-      await push(ref(database, 'users'), { // Push user data to 'users' node
-        uid: user.uid, // Store the UID from Firebase Auth
+      // Save additional user information to Realtime Database using the UID as the key
+      await set(ref(database, `users/${user.uid}`), { // Set user data under the UID
         firstName,
         lastName,
-        email
+        email,
+        blocked: false, // Initially set the user as not blocked
+        subscriptionStatus: 'inactive', // Default subscription status
       });
 
       alert('Sign Up Successful! Redirecting to the home page...');
-      window.location.href = 'http://localhost:3000/'; // Redirect to the desired URL
+      window.location.href = '/'; // Redirect to the home page
     } catch (error) {
-      setError(error.message); // Show error if sign-up fails
+      // Check if the error is related to blocked users or display general error
+      if (error.message.includes('blocked')) {
+        setError('Your account is temporarily blocked. Please contact support.');
+      } else {
+        setError(error.message); // Show error if sign-up fails
+      }
     }
   };
 

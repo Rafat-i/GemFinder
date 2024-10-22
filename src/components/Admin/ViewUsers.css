@@ -36,9 +36,9 @@
     background-color: #f7f7f7;
 }
 
-.remove-button {
+.block-button { /* changed from remove-button */
     padding: 6px 12px;
-    background-color: #dc3545; /* Red button */
+    background-color: #ffc107; /* yellow for block button */
     color: white;
     border: none;
     border-radius: 6px;
@@ -46,6 +46,6 @@
     transition: background-color 0.3s;
 }
 
-.remove-button:hover {
-    background-color: #c82333; /* Darker red on hover */
+.block-button:hover { /* changed hover color too */
+    background-color: #e0a800; /* darker yellow */
 }

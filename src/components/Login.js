@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { auth } from '../Firebase'; // Firebase Authentication
+import { auth, database } from '../Firebase'; // Import database for Realtime Database
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { ref, get } from 'firebase/database'; // Import 'get' to fetch user data from the database
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Import useAuth
 
@@ -31,11 +32,32 @@ function Login() {
     // Regular user login
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setCurrentUser(userCredential.user); // Set currentUser after successful login
+      const user = userCredential.user;
+
+      // Check if the user is blocked in the Realtime Database
+      const userRef = ref(database, `users/${user.uid}`);
+      console.log('Checking if user is blocked'); // Debugging log
+      const snapshot = await get(userRef);
+
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        console.log('User data:', userData); // Debugging log
+        if (userData.blocked) {
+          console.log('User is blocked'); // Debugging log
+          setError('Your account is temporarily blocked. Please contact support.');
+          return; // Exit early if the user is blocked
+        }
+      } else {
+        console.log('No data found for this user.'); // Debugging log
+      }
+
+      // Proceed with login if not blocked
+      setCurrentUser(user); // Set currentUser after successful login
       alert('Login Successful!');
       navigate('/'); // Redirect to the home page
     } catch (error) {
-      setError(error.message);
+      console.error('Login error:', error); // Log the error for debugging
+      setError(error.message); // Display error message
     }
   };
 
@@ -62,6 +84,11 @@ function Login() {
           {isAdminLogin ? 'Login as Admin' : 'Login as User'}
         </button>
       </form>
+
+      {/* Forgot Password link */}
+      <p style={styles.forgotPassword}>
+        <a href="/password-recovery" style={styles.forgotLink}>Forgot Password?</a>
+      </p>
 
       {/* Stylish Toggle for admin or user login */}
       <div style={styles.toggleContainer}>
@@ -118,6 +145,16 @@ const styles = {
     color: 'red',
     marginBottom: '15px',
   },
+  forgotPassword: {
+    marginTop: '10px',
+    textAlign: 'center',
+  },
+  forgotLink: {
+    color: '#007BFF',
+    textDecoration: 'none',
+    fontSize: '14px',
+    cursor: 'pointer',
+  },
   toggleContainer: {
     marginTop: '20px',
     display: 'flex',
@@ -137,7 +174,7 @@ const styles = {
   toggleSwitch: {
     width: '50px',
     height: '24px',
-    backgroundColor: '#007BFF', // Blue color for the toggle switch
+    backgroundColor: '#007BFF',
     borderRadius: '50px',
     position: 'relative',
     transition: 'background-color 0.2s',

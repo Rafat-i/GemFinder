@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { database } from '../../Firebase'; // Use Realtime Database
-import { ref, onValue } from 'firebase/database'; // Import ref and onValue from firebase/database
+import { ref, onValue, update } from 'firebase/database'; // Import ref, onValue, and update from firebase/database
 import './ViewUsers.css';
 
 const ViewUsers = () => {
@@ -24,9 +24,15 @@ const ViewUsers = () => {
         fetchUsers();
     }, []);
 
-    const handleRemoveUser = (userId) => {
-        // Implement removal logic here
-        console.log("Remove user with ID:", userId);
+    const handleBlockUser = (userId, isBlocked) => {
+        const userRef = ref(database, `users/${userId}`);
+        update(userRef, { blocked: !isBlocked }) // Toggle the blocked status
+            .then(() => {
+                console.log(`User with ID ${userId} is now ${isBlocked ? 'unblocked' : 'blocked'}.`);
+            })
+            .catch((error) => {
+                console.error("Error updating user status: ", error);
+            });
     };
 
     return (
@@ -35,9 +41,12 @@ const ViewUsers = () => {
             <ul className="user-list">
                 {users.map(user => (
                     <li key={user.id} className="user-item">
-                        {user.firstName} {user.lastName} {/* Adjust the property to match your user data */}
-                        <button className="remove-button" onClick={() => handleRemoveUser(user.id)}>
-                            Remove
+                        {user.firstName} {user.lastName} {/* Adjust to match your user data */}
+                        <button
+                            className={`block-button ${user.blocked ? 'unblock' : 'block'}`}
+                            onClick={() => handleBlockUser(user.id, user.blocked)}
+                        >
+                            {user.blocked ? 'Unblock' : 'Block'}
                         </button>
                     </li>
                 ))}

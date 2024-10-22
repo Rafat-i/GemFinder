@@ -1,0 +1,56 @@
+/* src/components/Cancel.css */
+
+.cancel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #fff3f3; /* Light red background */
+    color: #d32f2f; /* Dark red text */
+    text-align: center;
+  }
+  
+  .cancel-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .cancel-message {
+    font-size: 1.2rem;
+    margin: 20px 0;
+  }
+  
+  .home-button {
+    padding: 10px 20px;
+    background-color: #f44336; /* Red button */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .home-button:hover {
+    background-color: #c62828; /* Darker red on hover */
+  }
+  
+  .retry-button {
+    padding: 10px 20px;
+    background-color: #ff9800; /* Orange button */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-left: 10px; /* Add some space between buttons */
+  }
+  
+  .retry-button:hover {
+    background-color: #fb8c00; /* Darker orange on hover */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  

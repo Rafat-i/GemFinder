@@ -1,10 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Home.css'; // Import the CSS file for styling
-
-// Import the new image from the Image folder inside src
 import rightImage from '../Image/RightImage.jpg'; 
+import { loadStripe } from '@stripe/stripe-js'; // Stripe library for payments
+
+// Initialize Stripe with your public key
+const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZuw4JMVtDn3vc9E6AdhKptxGawLfsWnvgZHyppuBAjP6RHqJnxaR00zNrUzNQz'); // Replace with your actual Stripe public key
 
 function Home() {
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    // Handle subscription click
+    const handleSubscription = async (plan) => {
+        setLoading(true);
+        setErrorMessage('');
+
+        const stripe = await stripePromise;
+
+        try {
+            const response = await fetch('http://localhost:4242/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ plan }), // Send selected plan to backend
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create checkout session');
+            }
+
+            const session = await response.json();
+
+            // Redirect to Stripe Checkout
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.id,
+            });
+
+            if (result.error) {
+                setErrorMessage(result.error.message);
+            }
+        } catch (error) {
+            setErrorMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="home-container">
             {/* Motivational Section with Larger Image */}
@@ -55,49 +97,34 @@ function Home() {
             {/* Subscription Plan Section */}
             <div className="subscription-section">
                 <h2>Choose Your Plan</h2>
-                <div className="plans-container">
-                    <div className="plan">
-                        <div className="plan-icon">📅</div>
-                        <h3>1 Month</h3>
-                        <p className="price">$160</p>
-                        <button className="select-plan">Get Started</button>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                {loading ? (
+                    <p className="loading-message">Creating checkout session...</p>
+                ) : (
+                    <div className="plans-container">
+                        <div className="plan">
+                            <div className="plan-icon">📅</div>
+                            <h3>1 Month</h3>
+                            <p className="price">$160</p>
+                            <button className="select-plan" onClick={() => handleSubscription('1 Month')}>Get Started</button>
+                        </div>
+                        <div className="plan">
+                            <div className="plan-icon">📆</div>
+                            <h3>2 Months</h3>
+                            <p className="price">$240</p>
+                            <button className="select-plan" onClick={() => handleSubscription('2 Months')}>Get Started</button>
+                        </div>
+                        <div className="plan">
+                            <div className="plan-icon">🎁</div>
+                            <h3>Lifetime</h3>
+                            <p className="price">$1000</p>
+                            <button className="select-plan" onClick={() => handleSubscription('Lifetime')}>Get Started</button>
+                        </div>
                     </div>
-                    <div className="plan">
-                        <div className="plan-icon">📆</div>
-                        <h3>2 Months</h3>
-                        <p className="price">$240</p>
-                        <button className="select-plan">Get Started</button>
-                    </div>
-                    <div className="plan">
-                        <div className="plan-icon">🎁</div>
-                        <h3>Lifetime</h3>
-                        <p className="price">$1000</p>
-                        <button className="select-plan">Get Started</button>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );
 }
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
