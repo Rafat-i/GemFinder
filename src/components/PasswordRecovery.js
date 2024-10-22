@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { auth } from '../Firebase';  // Import Firebase auth
 import { sendPasswordResetEmail } from 'firebase/auth';  // Import password reset method
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for routing
 
 function PasswordRecovery() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');  // To handle error messages
   const [message, setMessage] = useState('');  // To show success message
+  const navigate = useNavigate();  // Hook for navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +17,7 @@ function PasswordRecovery() {
       setMessage('Password recovery instructions sent to your email!');
       setError('');  // Clear any previous errors
       setTimeout(() => {
-        window.location.href = '/login';  // Redirect to login page after success
+        navigate('/login');  // Redirect to login page after success
       }, 2000);  // Redirect after 2 seconds
     } catch (error) {
       setError(error.message);  // Show error if something goes wrong
@@ -56,6 +58,8 @@ const styles = {
     padding: '10px',
     marginBottom: '15px',
     fontSize: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
   },
   button: {
     padding: '10px',
@@ -63,6 +67,7 @@ const styles = {
     color: 'white',
     border: 'none',
     cursor: 'pointer',
+    borderRadius: '5px',
   },
   error: {
     color: 'red',
@@ -75,4 +80,3 @@ const styles = {
 };
 
 export default PasswordRecovery;
-
