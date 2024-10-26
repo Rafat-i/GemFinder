@@ -14,6 +14,7 @@ import UpdateUsers from './components/Admin/UpdateUsers';
 import ViewUsers from './components/Admin/ViewUsers';
 import RemoveUser from './components/Admin/RemoveUser';
 import AdminRoute from './routes/AdminRoute';
+import ProtectedRoute from './routes/ProtectedRoute'; // Import your ProtectedRoute component
 import AuthStateListener from './components/AuthStateListener';
 import { AuthProvider } from './context/AuthContext';
 import ProfileEdit from './components/ProfileEdit'; // Import the ProfileEdit component
@@ -32,9 +33,16 @@ function App() {
           <Route path="/edit-profile" element={<ProfileEdit />} /> {/* Route for editing profile */}
 
           {/* Payment Routes */}
-          <Route path="/payment" element={<PaymentPage />} /> {/* Main payment page */}
-          <Route path="/success" element={<Success />} /> {/* Success page */}
-          <Route path="/cancel" element={<Cancel />} /> {/* Cancel page */}
+          <Route 
+            path="/payment" 
+            element={
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
 
           {/* Admin Routes */}
           <Route element={<AdminRoute />}> {/* Wrap admin routes with AdminRoute for protection */}
