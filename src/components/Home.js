@@ -1,7 +1,12 @@
+// src/components/Home.js
 import React, { useState } from 'react';
 import './Home.css'; // Import the CSS file for styling
 import rightImage from '../Image/RightImage.jpg'; 
 import { loadStripe } from '@stripe/stripe-js'; // Stripe library for payments
+import { ref, update, get } from 'firebase/database'; // Import Firebase database update function and get for snapshot
+import { useAuth } from '../context/AuthContext'; // Use Auth context to get the current user
+import { database } from '../Firebase'; // Import your initialized Firebase database
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 // Initialize Stripe with your public key
 const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZuw4JMVtDn3vc9E6AdhKptxGawLfsWnvgZHyppuBAjP6RHqJnxaR00zNrUzNQz'); // Replace with your actual Stripe public key
@@ -9,9 +14,16 @@ const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZ
 function Home() {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const { currentUser } = useAuth(); // Get currentUser from the Auth context
+    const navigate = useNavigate(); // Initialize useNavigate
 
     // Handle subscription click
     const handleSubscription = async (plan) => {
+        if (!currentUser) {
+            navigate('/login'); // Redirect to login page if user is not logged in
+            return;
+        }
+
         setLoading(true);
         setErrorMessage('');
 
@@ -32,6 +44,9 @@ function Home() {
 
             const session = await response.json();
 
+            // Update user's subscription status in Firebase
+            await updateUserSubscriptionStatus(plan); // Call the update function here
+
             // Redirect to Stripe Checkout
             const result = await stripe.redirectToCheckout({
                 sessionId: session.id,
@@ -39,11 +54,58 @@ function Home() {
 
             if (result.error) {
                 setErrorMessage(result.error.message);
+            } else {
+                // Log the Stripe checkout session for debugging
+                console.log('Checkout session created successfully:', session);
             }
         } catch (error) {
             setErrorMessage(error.message);
+            console.error('Error during subscription:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Function to update user's subscriptionStatus in Firebase
+    const updateUserSubscriptionStatus = async (plan) => {
+        if (currentUser) {
+            try {
+                const userRef = ref(database, `users/${currentUser.uid}`); // Reference to the current user in the database
+
+                // Get a snapshot of the user's current data
+                const snapshot = await get(userRef);
+                if (snapshot.exists()) {
+                    const userData = snapshot.val(); // Get user data
+
+                    // Log the current user data before updating
+                    console.log("Current user data before update:", userData);
+
+                    // Check if the plan is being passed correctly
+                    console.log("Selected plan:", plan);
+
+                    // Update the subscription status with a boolean
+                    const updatedSubscriptionStatus = {
+                        subscriptionStatus: true, // Set to true for the selected plan
+                        active1Month: plan === '1 Month', // Set specific flags for each plan
+                        active2Months: plan === '2 Months',
+                        activeLifetime: plan === 'Lifetime',
+                    };
+
+                    await update(userRef, {
+                        ...userData, // Keep existing user data
+                        ...updatedSubscriptionStatus, // Set subscription status and flags based on the plan
+                    });
+
+                    // Log success message
+                    console.log('Subscription status updated successfully to:', updatedSubscriptionStatus);
+                } else {
+                    console.log('User does not exist in the database');
+                }
+            } catch (error) {
+                console.error('Error updating subscription status:', error);
+            }
+        } else {
+            console.log('No user logged in');
         }
     };
 
