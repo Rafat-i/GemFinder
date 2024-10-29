@@ -23,7 +23,7 @@ function SignUp() {
         lastName,
         email,
         blocked: false, // Initially set the user as not blocked
-        subscriptionStatus: 'inactive', // Default subscription status
+        subscriptionStatus: false, // Default subscription status set to false
       });
 
       alert('Sign Up Successful! Redirecting to the home page...');

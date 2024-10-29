@@ -49,13 +49,28 @@ const fetchUserData = async (uid) => {
         firstName: userData.firstName || "", // Retrieve first name
         lastName: userData.lastName || "", // Retrieve last name
         blocked: userData.blocked || false, // Default to false if not set
+        subscriptionStatus: !!userData.subscriptionStatus, // Ensure boolean value for subscriptionStatus
       };
     } else {
       console.error("No such user!"); // User data not found
-      return { uid, email: null, firstName: "", lastName: "", blocked: false }; // Default object if user does not exist
+      return {
+        uid,
+        email: null,
+        firstName: "",
+        lastName: "",
+        blocked: false,
+        subscriptionStatus: false, // Default to false if user does not exist
+      };
     }
   } catch (error) {
     console.error("Error fetching user data: ", error); // Log the error
-    return { uid, email: null, firstName: "", lastName: "", blocked: false }; // Handle errors
+    return {
+      uid,
+      email: null,
+      firstName: "",
+      lastName: "",
+      blocked: false,
+      subscriptionStatus: false, // Handle errors and default to false
+    };
   }
 };

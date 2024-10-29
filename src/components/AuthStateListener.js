@@ -3,7 +3,6 @@ import { auth, database } from '../Firebase'; // Ensure you import the database
 import { useAuth } from '../context/AuthContext';
 import { ref, get } from 'firebase/database'; // Import necessary functions
 
-
 const AuthStateListener = () => {
   const { setCurrentUser } = useAuth();
 
@@ -11,11 +10,11 @@ const AuthStateListener = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          // Fetch user data including blocked status
+          // Fetch user data including blocked status and subscription status
           const userData = await fetchUserData(user.uid);
           setCurrentUser(userData);
           if (userData.blocked) {
-            console.log("Your account is temporarily blocked. Please contact support."); // Blocked user message
+            console.log("Your account is temporarily blocked. Please contact support.");
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -47,13 +46,28 @@ const fetchUserData = async (uid) => {
         firstName: userData.firstName || "", // Retrieve first name
         lastName: userData.lastName || "", // Retrieve last name
         blocked: userData.blocked || false, // Default to false if not set
+        subscriptionStatus: !!userData.subscriptionStatus, // Convert subscriptionStatus to boolean
       };
     } else {
       console.error("No such user!"); // User data not found
-      return { uid, email: null, firstName: "", lastName: "", blocked: false }; // Default object if user does not exist
+      return { 
+        uid, 
+        email: null, 
+        firstName: "", 
+        lastName: "", 
+        blocked: false, 
+        subscriptionStatus: false, // Default to false if user does not exist
+      };
     }
   } catch (error) {
     console.error("Error fetching user data: ", error); // Log the error
-    return { uid, email: null, firstName: "", lastName: "", blocked: false }; // Handle errors
+    return { 
+      uid, 
+      email: null, 
+      firstName: "", 
+      lastName: "", 
+      blocked: false, 
+      subscriptionStatus: false, // Handle errors and return default value for subscriptionStatus
+    };
   }
 };
