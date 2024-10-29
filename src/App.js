@@ -5,19 +5,19 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import PasswordRecovery from './components/PasswordRecovery';
 import Home from './components/Home';
-import PaymentPage from './components/PaymentPage'; // Import your PaymentPage component
-import Success from './components/Success'; // Import your Success component
-import Cancel from './components/Cancel'; // Import your Cancel component
+import PaymentPage from './components/PaymentPage';
+import Success from './components/Success';
+import Cancel from './components/Cancel';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AddUser from './components/Admin/AddUser';
 import UpdateUsers from './components/Admin/UpdateUsers';
 import ViewUsers from './components/Admin/ViewUsers';
 import RemoveUser from './components/Admin/RemoveUser';
 import AdminRoute from './routes/AdminRoute';
-import ProtectedRoute from './routes/ProtectedRoute'; // Import your ProtectedRoute component
+import ProtectedRoute from './routes/ProtectedRoute';
 import AuthStateListener from './components/AuthStateListener';
 import { AuthProvider } from './context/AuthContext';
-import ProfileEdit from './components/ProfileEdit'; // Import the ProfileEdit component
+import ProfileEdit from './components/ProfileEdit';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/password-recovery" element={<PasswordRecovery />} />
-          <Route path="/edit-profile" element={<ProfileEdit />} /> {/* Route for editing profile */}
+          <Route path="/edit-profile" element={<ProfileEdit />} />
 
           {/* Payment Routes */}
           <Route 
@@ -45,7 +45,7 @@ function App() {
           <Route path="/cancel" element={<Cancel />} />
 
           {/* Admin Routes */}
-          <Route element={<AdminRoute />}> {/* Wrap admin routes with AdminRoute for protection */}
+          <Route element={<AdminRoute />}> 
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/add-user" element={<AddUser />} />
             <Route path="/admin/update-user" element={<UpdateUsers />} />

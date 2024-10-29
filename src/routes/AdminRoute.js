@@ -1,13 +1,13 @@
 // AdminRoute.js
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const AdminRoute = ({ element }) => {
+const AdminRoute = () => {
   const { currentUser } = useAuth();
   const isAdmin = currentUser && currentUser.email === 'rafat@gmail.com'; // Adjust as needed
 
-  return isAdmin ? element : <Navigate to="/login" />;
+  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default AdminRoute;
