@@ -1,26 +1,49 @@
 // src/components/Home.js
-import React, { useState } from 'react';
-import './Home.css'; // Import the CSS file for styling
-import rightImage from '../Image/RightImage.jpg'; 
-import { loadStripe } from '@stripe/stripe-js'; // Stripe library for payments
-import { ref, update, get } from 'firebase/database'; // Import Firebase database update function and get for snapshot
-import { useAuth } from '../context/AuthContext'; // Use Auth context to get the current user
-import { database } from '../Firebase'; // Import your initialized Firebase database
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import { loadStripe } from '@stripe/stripe-js';
+import { ref, update, get } from 'firebase/database';
+import { useAuth } from '../context/AuthContext';
+import { database } from '../Firebase';
+import { useNavigate } from 'react-router-dom';
 
-// Initialize Stripe with your public key
-const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZuw4JMVtDn3vc9E6AdhKptxGawLfsWnvgZHyppuBAjP6RHqJnxaR00zNrUzNQz'); // Replace with your actual Stripe public key
+const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZuw4JMVtDn3vc9E6AdhKptxGawLfsWnvgZHyppuBAjP6RHqJnxaR00zNrUzNQz');
 
 function Home() {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const { currentUser } = useAuth(); // Get currentUser from the Auth context
-    const navigate = useNavigate(); // Initialize useNavigate
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
 
-    // Handle subscription click
+    const [prices, setPrices] = useState({
+        BTC: { price: null, change: null },
+        ETH: { price: null, change: null },
+        SOL: { price: null, change: null },
+    });
+
+    useEffect(() => {
+        const fetchPrices = async () => {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');
+                const data = await response.json();
+                setPrices({
+                    BTC: { price: data.bitcoin.usd, change: data.bitcoin.usd_24h_change },
+                    ETH: { price: data.ethereum.usd, change: data.ethereum.usd_24h_change },
+                    SOL: { price: data.solana.usd, change: data.solana.usd_24h_change },
+                });
+            } catch (error) {
+                console.error("Error fetching prices:", error);
+            }
+        };
+
+        fetchPrices();
+        const intervalId = setInterval(fetchPrices, 60000);
+        return () => clearInterval(intervalId);
+    }, []);
+
     const handleSubscription = async (plan) => {
         if (!currentUser) {
-            navigate('/login'); // Redirect to login page if user is not logged in
+            navigate('/login');
             return;
         }
 
@@ -35,7 +58,7 @@ function Home() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ plan }), // Send selected plan to backend
+                body: JSON.stringify({ plan }),
             });
 
             if (!response.ok) {
@@ -43,9 +66,6 @@ function Home() {
             }
 
             const session = await response.json();
-
-            // Update user's subscription status in Firebase
-            await updateUserSubscriptionStatus(plan); // Call the update function here
 
             // Redirect to Stripe Checkout
             const result = await stripe.redirectToCheckout({
@@ -55,8 +75,8 @@ function Home() {
             if (result.error) {
                 setErrorMessage(result.error.message);
             } else {
-                // Log the Stripe checkout session for debugging
-                console.log('Checkout session created successfully:', session);
+                // Call the function to update the user's subscription status
+                await updateUserSubscriptionStatus(plan);
             }
         } catch (error) {
             setErrorMessage(error.message);
@@ -66,60 +86,64 @@ function Home() {
         }
     };
 
-    // Function to update user's subscriptionStatus in Firebase
     const updateUserSubscriptionStatus = async (plan) => {
         if (currentUser) {
             try {
-                const userRef = ref(database, `users/${currentUser.uid}`); // Reference to the current user in the database
-
-                // Get a snapshot of the user's current data
+                const userRef = ref(database, `users/${currentUser.uid}`);
                 const snapshot = await get(userRef);
                 if (snapshot.exists()) {
-                    const userData = snapshot.val(); // Get user data
+                    const userData = snapshot.val();
 
-                    // Log the current user data before updating
-                    console.log("Current user data before update:", userData);
-
-                    // Check if the plan is being passed correctly
-                    console.log("Selected plan:", plan);
-
-                    // Update the subscription status with a boolean
                     const updatedSubscriptionStatus = {
-                        subscriptionStatus: true, // Set to true for the selected plan
-                        active1Month: plan === '1 Month', // Set specific flags for each plan
-                        active2Months: plan === '2 Months',
-                        activeLifetime: plan === 'Lifetime',
+                        subscriptionStatus: true, // Set to true when subscribed
+                        active1Month: plan === '1 Month' ? true : userData.active1Month || false,
+                    active2Months: plan === '2 Months' ? true : userData.active2Months || false,
+                    activeLifetime: plan === 'Lifetime' ? true : userData.activeLifetime || false,
                     };
 
                     await update(userRef, {
-                        ...userData, // Keep existing user data
-                        ...updatedSubscriptionStatus, // Set subscription status and flags based on the plan
+                        ...userData,
+                        ...updatedSubscriptionStatus,
                     });
-
-                    // Log success message
-                    console.log('Subscription status updated successfully to:', updatedSubscriptionStatus);
-                } else {
-                    console.log('User does not exist in the database');
                 }
             } catch (error) {
                 console.error('Error updating subscription status:', error);
             }
-        } else {
-            console.log('No user logged in');
         }
     };
 
     return (
         <div className="home-container">
-            {/* Motivational Section with Larger Image */}
+            {/* Motivational Section with Live Price Tracking */}
             <div className="motivational-section">
-                <div className="text-image-wrapper">
+                <div className="text-price-wrapper">
                     <div className="motivational-text">
                         <h2>You Are the Next Crypto Millionaire</h2>
                         <p>Sounds too good to be true, right? Every second you wait is costing you money...</p>
                     </div>
-                    <div className="motivational-image">
-                        <img src={rightImage} alt="Crypto Success" className="right-image" />
+                    <div className="live-prices">
+                        <h3>Live Prices</h3>
+                        <div className="crypto-price">
+                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022" alt="BTC" className="crypto-logo" />
+                            <p>BTC: ${prices.BTC.price ? prices.BTC.price.toLocaleString() : 'Loading...'}</p>
+                            <p className={`price-change ${prices.BTC.change >= 0 ? 'positive' : 'negative'}`}>
+                                {prices.BTC.change ? prices.BTC.change.toFixed(2) + '%' : ''}
+                            </p>
+                        </div>
+                        <div className="crypto-price">
+                            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022" alt="ETH" className="crypto-logo" />
+                            <p>ETH: ${prices.ETH.price ? prices.ETH.price.toLocaleString() : 'Loading...'}</p>
+                            <p className={`price-change ${prices.ETH.change >= 0 ? 'positive' : 'negative'}`}>
+                                {prices.ETH.change ? prices.ETH.change.toFixed(2) + '%' : ''}
+                            </p>
+                        </div>
+                        <div className="crypto-price">
+                            <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=022" alt="SOL" className="crypto-logo" />
+                            <p>SOL: ${prices.SOL.price ? prices.SOL.price.toLocaleString() : 'Loading...'}</p>
+                            <p className={`price-change ${prices.SOL.change >= 0 ? 'positive' : 'negative'}`}>
+                                {prices.SOL.change ? prices.SOL.change.toFixed(2) + '%' : ''}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,7 +201,7 @@ function Home() {
                             <button className="select-plan" onClick={() => handleSubscription('2 Months')}>Get Started</button>
                         </div>
                         <div className="plan">
-                            <div className="plan-icon">🎁</div>
+                            <div className="plan-icon">🏆</div>
                             <h3>Lifetime</h3>
                             <p className="price">$1000</p>
                             <button className="select-plan" onClick={() => handleSubscription('Lifetime')}>Get Started</button>

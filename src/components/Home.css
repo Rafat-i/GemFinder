@@ -217,6 +217,74 @@
     font-weight: bold;
 }
 
+.text-price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.live-prices {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 200px;
+}
+
+.live-prices h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.live-prices p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #555;
+}
+
+.text-price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.live-prices {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 250px;
+    width: 100%;
+}
+
+.crypto-price {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.crypto-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.price-change {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.price-change.positive {
+    color: #28a745;
+}
+
+.price-change.negative {
+    color: #dc3545;
+}
+
+
+
 
 
 

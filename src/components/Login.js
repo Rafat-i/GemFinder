@@ -22,7 +22,7 @@ function Login() {
       if (email === 'rafat@gmail.com' && password === '123456') {
         alert('Admin Login Successful!');
         setCurrentUser({ email }); // Set the current user for admin
-        navigate('/admin-dashboard'); // Redirect to admin dashboard
+        navigate('/admin/dashboard'); // Redirect to admin dashboard
       } else {
         setError('Invalid admin credentials');
       }
