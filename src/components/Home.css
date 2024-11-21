@@ -1,187 +1,276 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #ffffff; /* White background for the whole page */
+    color: #333; /* Dark text for readability */
+    font-size: 16px; /* Slightly increased font size */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Home Container */
 .home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #f0f4f8; /* Soft background */
-    min-height: 100vh;
+    padding: 80px 40px;
+    background: #ffffff; /* White background for the container */
+    border-radius: 20px;
+    max-width: 1100px;
+    margin: 30px auto;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Light soft shadow */
 }
 
-/* Motivational Section with Text and Larger Image */
+/* Motivational Section */
 .motivational-section {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    gap: 40px;
+    background-color: #ffffff; /* Explicit white background */
 }
 
 .text-image-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 .motivational-text {
     flex: 1;
+    max-width: 600px;
 }
 
 .motivational-text h2 {
-    font-size: 32px;
-    color: #333333;
-    margin-bottom: 10px; /* Reduced spacing */
-    font-weight: bold;
+    font-size: 52px; /* Increased size */
+    font-weight: 900;
+    color: #222222; /* Dark text color */
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
 .motivational-text p {
-    font-size: 18px;
-    color: #555555;
-}
-
-.motivational-image {
-    flex: 1;
+    font-size: 20px; /* Increased size */
+    color: #666; /* Lighter gray text */
+    line-height: 1.8;
 }
 
 .motivational-image img {
-    width: 300px; /* Larger image */
-    height: auto;
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
 }
 
-/* About Us section styles */
+/* About Us Section */
 .about-us-section {
     width: 100%;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
+    padding: 60px 20px;
+    background: #ffffff; /* White background for About Us section */
+    border-radius: 20px;
 }
 
 .about-us-section h2 {
-    font-size: 32px;
-    color: #333333;
-    margin-bottom: 30px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-size: 52px; /* Increased size */
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
 }
 
 .about-us-content {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* Space between items */
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .about-us-item {
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 45%;
-    max-width: 400px;
-    text-align: left;
+    background: #ffffff; /* White background for cards */
+    border-radius: 20px;
+    padding: 40px;
+    width: 300px;
+    max-width: 380px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.about-us-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .about-us-item h3 {
-    font-size: 20px;
-    color: #2193b0; /* Accent color */
-    margin-bottom: 10px;
+    font-size: 32px; /* Increased size */
+    color: #5c6bc0; /* Accent color */
+    margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .about-us-item p {
-    font-size: 16px;
-    color: #333333;
+    font-size: 18px; /* Increased size */
+    color: #777; /* Light gray */
+    line-height: 1.6;
 }
 
-/* Subscription Plan section styles */
+/* Subscription Plan Section */
 .subscription-section {
     width: 100%;
     text-align: center;
+    margin-bottom: 100px;
+    padding: 60px 20px;
+    background: #ffffff; /* White background for Subscription Plans section */
 }
 
 .subscription-section h2 {
-    font-size: 32px;
-    color: #333333;
-    margin-bottom: 30px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-size: 52px; /* Increased size */
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
 }
 
-/* Plans container layout using Flexbox */
+/* Plan cards container layout */
 .plans-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 40px;
     width: 100%;
-    max-width: 1200px;
 }
 
-/* Plan card with updated background color */
+/* Individual Plan card */
 .plan {
-    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Updated color */
-    padding: 40px;
-    margin: 15px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 250px;
+    background: #5c6bc0; /* Retain color for plan cards */
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    width: 300px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #ffffff;
+    transition: all 0.3s ease;
+    color: #fff;
 }
 
 .plan:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* Icon for each plan */
 .plan-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-/* Plan headings */
-.plan h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #ffffff;
-}
-
-/* Price styling */
-.plan .price {
-    font-size: 26px;
-    font-weight: bold;
-    color: #ffffff;
+    font-size: 55px; /* Increased size */
     margin-bottom: 20px;
 }
 
-/* Select Plan button */
+.plan h3 {
+    font-size: 34px; /* Increased size */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.plan .price {
+    font-size: 40px; /* Increased size */
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
 .select-plan {
-    background-color: #ffffff; /* Default background */
-    color: #2193b0; /* Updated text color */
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
+    background-color: #fff;
+    color: #5c6bc0;
+    font-size: 18px; /* Increased size */
+    font-weight: 600;
+    padding: 15px 30px;
     border: none;
-    border-radius: 20px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .select-plan:hover {
-    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Same gradient as plan background */
-    color: #ffffff; /* White text for contrast */
+    background-color: #5c6bc0;
+    color: #fff;
+    transform: scale(1.05);
 }
 
-/* Additional Text */
-.additional-text {
-    font-size: 18px;
-    color: #333333;
-    margin: 20px 0;
+/* Live Prices Section */
+.live-prices-wrapper {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    gap: 30px;
+    margin-top: 50px;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    width: 100%; /* Full width to ensure it stretches */
+    max-width: 1100px; /* Optional: limit the max width */
+    margin: 0 auto; /* Center horizontally */
+}
+
+.live-prices {
+    background-color: #ffffff; /* White background for live prices */
+    color: #333;
+    border-radius: 20px;
+    padding: 20px 30px;
+    width: 300px; /* Set fixed width for each live price box */
+    text-align: left;
+    transition: all 0.3s ease;
+    margin-bottom: 20px; /* Adds spacing between boxes */
+}
+
+.live-prices:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.live-prices h3,
+.live-prices p {
+    margin: 10px 0;
+}
+
+/* Cryptocurrency Price Container */
+.crypto-price {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.crypto-logo {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+}
+
+.price-change {
     font-weight: bold;
+    padding-left: 10px;
+    margin-left: 12px;
+    font-size: 1.6em; /* Increased size */
 }
 
-/* Responsive adjustments */
+.price-change.positive {
+    color: #27ae60; /* Green for positive change */
+}
+
+.price-change.negative {
+    color: #e74c3c; /* Red for negative change */
+}
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     .text-image-wrapper {
         flex-direction: column;
@@ -194,109 +283,29 @@
     }
 
     .about-us-item {
-        width: 90%;
+        width: 80%;
+        margin-bottom: 40px;
     }
 
     .plans-container {
         flex-direction: column;
+        align-items: center;
     }
 
     .plan {
-        width: 100%;
+        width: 80%;
         max-width: 400px;
     }
+
+    /* Adjust live prices for mobile */
+    .live-prices-wrapper {
+        flex-direction: column; /* Stack items vertically on mobile */
+        align-items: center;
+    }
+
+    .live-prices {
+        width: 80%; /* Reduce width on mobile for better readability */
+        max-width: 500px; /* Optional: limit the max width */
+        margin-bottom: 20px;
+    }
 }
-
-.error-message {
-    color: #f44336; /* Red for error messages */
-    font-weight: bold;
-}
-
-.loading-message {
-    color: #ff9800; /* Orange for loading messages */
-    font-weight: bold;
-}
-
-.text-price-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.live-prices {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 200px;
-}
-
-.live-prices h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-}
-
-.live-prices p {
-    margin: 5px 0;
-    font-size: 1em;
-    color: #555;
-}
-
-.text-price-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.live-prices {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 250px;
-    width: 100%;
-}
-
-.crypto-price {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.crypto-logo {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-}
-
-.price-change {
-    margin-left: auto;
-    font-weight: bold;
-}
-
-.price-change.positive {
-    color: #28a745;
-}
-
-.price-change.negative {
-    color: #dc3545;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

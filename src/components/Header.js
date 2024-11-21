@@ -57,6 +57,8 @@ const Header = () => {
             <button onClick={handleLogout} className="header-btn">Log Out</button>
           </>
         )}
+        <Link to="/contact-support" className="header-btn">Contact Support</Link> {/* Always visible link for Contact Support */}
+        <Link to="/about" className="header-btn">About</Link> {/* New About button */}
       </div>
     </header>
   );

@@ -46,7 +46,7 @@ function Home() {
             navigate('/login');
             return;
         }
-
+        console.log(plan);
         setLoading(true);
         setErrorMessage('');
 
@@ -93,17 +93,31 @@ function Home() {
                 const snapshot = await get(userRef);
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
-
+    
+                    // Preserve existing subscription status while updating the relevant flags
                     const updatedSubscriptionStatus = {
-                        subscriptionStatus: true, // Set to true when subscribed
-                        active1Month: plan === '1 Month' ? true : userData.active1Month || false,
-                    active2Months: plan === '2 Months' ? true : userData.active2Months || false,
-                    activeLifetime: plan === 'Lifetime' ? true : userData.activeLifetime || false,
+                        ...userData.subscriptionStatus, // Keep existing subscription status
                     };
-
+    
+                    // Check and update the status for the selected plan
+                    if (plan === '1 Month') {
+                        updatedSubscriptionStatus.active1Month = true;
+                        updatedSubscriptionStatus.active2Months = false; // Ensure other plans are false
+                        updatedSubscriptionStatus.activeLifetime = false;
+                    } else if (plan === '2 Months') {
+                        updatedSubscriptionStatus.active1Month = false;
+                        updatedSubscriptionStatus.active2Months = true;
+                        updatedSubscriptionStatus.activeLifetime = false;
+                    } else if (plan === 'Lifetime') {
+                        updatedSubscriptionStatus.active1Month = false;
+                        updatedSubscriptionStatus.active2Months = false;
+                        updatedSubscriptionStatus.activeLifetime = true;
+                    }
+    
+                    // Perform the update in the database
                     await update(userRef, {
                         ...userData,
-                        ...updatedSubscriptionStatus,
+                        subscriptionStatus: updatedSubscriptionStatus,
                     });
                 }
             } catch (error) {
@@ -111,6 +125,7 @@ function Home() {
             }
         }
     };
+    
 
     return (
         <div className="home-container">

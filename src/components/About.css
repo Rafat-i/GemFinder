@@ -1,0 +1,128 @@
+/* About.css */
+.about-page-container {
+  margin-top: 80px; /* Adjust this to match your header's height */
+  padding: 20px;
+  background: #f9f9f9; /* Slightly lighter background for a softer feel */
+  overflow-x: hidden; /* Prevent horizontal scrolling on mobile */
+}
+
+.about-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px; /* Slightly larger border radius for a more modern rounded effect */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  text-align: center;
+  transition: box-shadow 0.3s ease; /* Smooth transition for box shadow */
+}
+
+.about-content h1 {
+  color: #333;
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: 1px; /* Adds space between letters for a more refined look */
+}
+
+.about-content h2 {
+  color: #444;
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  text-transform: uppercase; /* Uppercase for headings to make them stand out */
+}
+
+.about-content p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.about-content p:hover {
+  color: #333; /* Darken text on hover for interaction */
+}
+
+.about-content ol {
+  padding-left: 30px;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.about-content ol li {
+  margin-bottom: 15px; /* Slightly larger space between items for readability */
+}
+
+.exchanges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  gap: 40px;
+  transition: transform 0.3s ease; /* Smooth transformation */
+}
+
+.exchanges img {
+  max-width: 160px;
+  height: auto;
+  margin: 0 10px;
+  border-radius: 12px;  /* Larger border radius for a modern rounded look */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.exchanges img:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Darker shadow for hover */
+}
+
+h2, h3 {
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 1024px) {
+  .about-content {
+    padding: 30px;
+  }
+
+  .about-content h1 {
+    font-size: 32px;
+  }
+
+  .about-content h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    padding: 20px;
+  }
+
+  .exchanges {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .exchanges img {
+    margin-bottom: 15px;
+    max-width: 120px;
+  }
+
+  .about-content h1 {
+    font-size: 28px;
+  }
+
+  .about-content h2 {
+    font-size: 22px;
+  }
+}

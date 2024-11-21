@@ -1,0 +1,130 @@
+/* Container styles */
+.gaming-coins-container {
+  margin-top: 80px; /* Adjust to match your header height */
+  padding: 25px; /* Slightly increased padding for spaciousness */
+  background: #f9f9f9; /* Light page background */
+  min-height: 100vh; /* Ensure full-page height */
+  margin-left: 250px; /* Adjust based on sidebar width */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Content styles */
+.gaming-coins-content {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 40px; /* Increased padding for content */
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+  text-align: center;
+}
+
+/* Header styles */
+.gaming-coins-content h1 {
+  color: #333;
+  font-size: 40px; /* Larger heading font size */
+  font-weight: 800; /* Bolder font weight */
+  margin-bottom: 30px; /* Increased spacing below */
+}
+
+.gaming-coins-content h2 {
+  color: #444;
+  font-size: 32px; /* Larger subheading font size */
+  font-weight: 700; /* Bold subheading */
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+.gaming-coins-content h3, .gaming-coins-content h4 {
+  color: #333;
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 40px;
+}
+
+/* Paragraph styles */
+.gaming-coins-content p {
+  color: #666;
+  line-height: 1.9; /* Better readability */
+  font-size: 20px; /* Slightly larger font size */
+  margin-bottom: 25px; /* Increased spacing below */
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* List styles */
+.gaming-coins-content ul {
+  text-align: left;
+  font-size: 20px; /* Larger list item text */
+  padding-left: 35px; /* Indented list items */
+  margin-bottom: 40px; /* Space after the list */
+}
+
+.gaming-coins-content ul li {
+  margin-bottom: 15px; /* Increased space between list items */
+}
+
+/* Coin logo styles */
+.coin-details {
+  margin-top: 40px;
+}
+
+.coin-logo {
+  max-width: 100%;
+  height: auto;
+  margin-top: 30px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.coin-logo:hover {
+  transform: scale(1.1); /* Larger zoom effect on hover */
+}
+
+/* Price image styles */
+.price-images {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Increased gap between images */
+  margin-top: 40px; /* Space above images */
+  margin-bottom: 40px; /* Space below images */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.price-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  max-width: 300px; /* Larger image size */
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.price-img:hover {
+  transform: scale(1.15); /* More prominent zoom on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gaming-coins-container {
+      margin-left: 0; /* Remove margin for smaller screens */
+  }
+
+  .gaming-coins-content {
+      padding: 25px; /* Reduced padding for small devices */
+  }
+
+  .price-images {
+      flex-direction: column; /* Stack images vertically */
+  }
+
+  .price-img {
+      max-width: 350px; /* Allow larger images for small screens */
+  }
+}
+
+/* Add margin to separate paragraphs and sections */
+.gaming-coins-content p + p {
+  margin-top: 50px; /* More space between paragraphs */
+}

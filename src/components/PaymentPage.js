@@ -1,4 +1,3 @@
-// src/components/PaymentPage.js
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -10,18 +9,18 @@ const stripePromise = loadStripe('pk_test_51Q8Se9AVQ8iROiHBKZHhiTPHcyGblwLx7WZFZ
 
 const PaymentPage = () => {
   const location = useLocation();
-  const { amount } = location.state || { amount: 0 }; // Get the amount from state, default to 0 if none
+  const { plan } = location.state || { plan: '' }; // Get the selected plan, default to empty string if none
 
-  // Optional: Redirect or show error if amount is invalid
-  if (amount <= 0) {
-    return <p>Error: Invalid payment amount.</p>;
+  // Optional: Show error if plan is not selected
+  if (!plan) {
+    return <p>Error: No plan selected. Please select a plan to proceed with payment.</p>;
   }
 
   return (
     <Elements stripe={stripePromise}>
       <h2>Complete Payment</h2>
-      <p>Amount to be paid: ${(amount / 100).toFixed(2)}</p>
-      <PaymentForm amount={amount} />
+      <p>Selected Plan: {plan}</p>
+      <PaymentForm plan={plan} />
     </Elements>
   );
 };

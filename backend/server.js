@@ -29,6 +29,7 @@ app.post('/create-checkout-session', async (req, res) => {
     console.log('Price in cents:', price); // Log the amount in cents
 
     try {
+        // Create checkout session with success URL that includes the plan
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -44,8 +45,8 @@ app.post('/create-checkout-session', async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: 'http://localhost:3000/success', // Change to your frontend success URL
-            cancel_url: 'http://localhost:3000/cancel',   // Change to your frontend cancel URL
+            success_url: `http://localhost:3000/success`, // success URL with dynamic plan
+            cancel_url: 'http://localhost:3000/cancel',   // Cancel URL
         });
 
         res.json({ id: session.id });

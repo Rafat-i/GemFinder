@@ -1,0 +1,79 @@
+/* Sidebar Styles */
+.sidebar {
+  position: fixed; /* Fix the sidebar to the left */
+  top: 100px; /* Leave space for the header */
+  left: 0;
+  width: 180px; /* Sidebar width */
+  height: calc(100vh - 100px); /* Sidebar height initially takes full viewport minus header */
+  background-color: #111; /* Dark background color */
+  color: #fff; /* Text color */
+  padding-top: 20px;
+  z-index: 10; /* Ensure it stays on top of other content */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  transition: width 0.3s ease; /* Smooth transition for width */
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3); /* Subtle shadow effect for depth */
+}
+
+/* Sidebar Links */
+.sidebar ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sidebar li {
+  margin: 20px 0;
+}
+
+.sidebar li a {
+  color: #ddd; /* Lighter text for a sleek look */
+  text-decoration: none;
+  padding: 12px 20px;
+  display: block;
+  font-size: 16px; /* Standard font size */
+  font-weight: 400; /* Slightly bold */
+  border-radius: 4px; /* Rounded corners for links */
+  transition: background-color 0.3s, transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.sidebar li a:hover {
+  background-color: #444; /* Slightly lighter background on hover */
+  transform: translateX(5px); /* Small slide effect to the right */
+  color: #fff; /* Highlight text color */
+}
+
+/* Content Adjustment */
+.about-content {
+  margin-left: 200px; /* Push main content to the right */
+  padding: 20px;
+  transition: margin-left 0.3s ease; /* Smooth transition for content movement */
+}
+
+/* Responsiveness for Smaller Screens */
+@media (max-width: 768px) {
+  .sidebar {
+      width: 60px; /* Narrow sidebar for smaller screens */
+      height: calc(100vh - 90px); /* Adjust height for smaller headers */
+      top: 90px; /* Leave more space below the smaller header */
+  }
+
+  .sidebar li a {
+      font-size: 14px; /* Reduce font size for smaller screens */
+      padding: 10px 12px; /* Adjust padding for better clickability */
+  }
+
+  .about-content {
+      margin-left: 70px; /* Adjust content margin for smaller screens */
+  }
+
+  .sidebar:hover {
+      width: 180px; /* Expand sidebar width on hover */
+  }
+}
+
+/* Ensure sidebar takes full height after scroll */
+@media (max-width: 768px) {
+  .sidebar {
+      height: 100%; /* Sidebar should take up the entire height when the page is scrolled */
+      position: relative; /* Change position to relative for scrolling */
+  }
+}
